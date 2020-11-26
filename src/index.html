@@ -3,7 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    /> -->
     <title>Document</title>
   </head>
-  <body></body>
+  <body>
+    <header class="hero-header">
+      <form class="search-form" id="search-form">
+        <input
+          class="form-input js-input-search"
+          type="text"
+          name="query"
+          autocomplete="off"
+          placeholder="Search images..."
+        />
+        <!-- <button type="submit" class="button">Искать</button> -->
+      </form>
+    </header>
+    <ul class="gallery">
+      <!-- Список <li> с карточками изображений -->
+    </ul>
+
+    <footer class="footer">
+      <button type="button" class="button button-more" data-action="load-more">
+        <span
+          class="spinner-border spinner-border-sm spinner is-hidden"
+          role="status"
+          aria-hidden="true"
+        ></span>
+
+        <span class="label">Показать ещё</span>
+      </button>
+    </footer>
+  </body>
 </html>
