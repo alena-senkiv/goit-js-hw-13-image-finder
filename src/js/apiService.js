@@ -5,11 +5,11 @@ export default class PixabayApiService {
   constructors() {
     this.searchQuery = '';
     this.page = 1;
-    // this.check();
+    this.perPage = 12;
   }
 
-  fetchPhoto() {
-    const url = `${BASE_URL}/?image_type=photo&orientation=horizontal&q=${this.searchQuery}&page=${this.page}&per_page=12&key=${API_KEY}`;
+  fetchImg() {
+    const url = `${BASE_URL}/?image_type=photo&orientation=horizontal&q=${this.searchQuery}&page=${this.page}&per_page=${this.perPage}&key=${API_KEY}`;
 
     return fetch(url)
       .then(response => response.json())
@@ -19,12 +19,6 @@ export default class PixabayApiService {
       })
       .catch(error => console.log(error));
   }
-
-  // check() {
-  //   if ((this.searchQuery = '')) {
-  //     return;
-  //   }
-  // }
 
   incrementPage() {
     this.page += 1;

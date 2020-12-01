@@ -14,20 +14,50 @@ const loadMoreBtn = new LoadMoreBtn({
   hidden: true,
 });
 
-refs.input.addEventListener('input', debounce(onInputChange, 1000));
+refs.input.addEventListener('input', debounce(onInputChange, 2000));
 loadMoreBtn.refs.button.addEventListener('click', onScroll);
 
 function onInputChange(e) {
   e.preventDefault();
+  clearCardsList();
   pixabayApiService.query = e.target.value.trim();
 
-  // if (pixabayApiService.query === '') {
-  //   return alert('Введите запрос');
-  // }
-  loadMoreBtn.show();
   pixabayApiService.resetPage();
-  clearCardsList();
   fetchCards();
+  loadMoreBtn.show();
+  e.target.value = '';
+}
+
+function fetchCards() {
+  loadMoreBtn.disable();
+  pixabayApiService.fetchImg().then(data => {
+    catchError(data);
+    loadMoreBtn.enable();
+    appendCardsMarkup(data);
+  });
+}
+
+function appendCardsMarkup(item) {
+  refs.cardsList.insertAdjacentHTML('beforeend', cardsTpl(item));
+}
+
+function catchError(data) {
+  if (data.length === 0) {
+    loadMoreBtn.disable();
+    notification(
+      'error',
+      'Sorry. Images not found! Please, enter another search phrase',
+    );
+  }
+
+  if (data.length > pixabayApiService.perPage) {
+    loadMoreBtn.disable();
+    notification('error', 'Sorry. No more images found!');
+  }
+}
+
+function clearCardsList() {
+  refs.cardsList.innerHTML = '';
 }
 
 function onScroll() {
@@ -40,20 +70,4 @@ function onScroll() {
       behavior: 'smooth',
     });
   }, 500);
-}
-
-function fetchCards() {
-  loadMoreBtn.disable();
-  pixabayApiService.fetchPhoto().then(data => {
-    appendCardsMarkup(data);
-    loadMoreBtn.enable();
-  });
-}
-
-function appendCardsMarkup(item) {
-  refs.cardsList.insertAdjacentHTML('beforeend', cardsTpl(item));
-}
-
-function clearCardsList() {
-  refs.cardsList.innerHTML = '';
 }

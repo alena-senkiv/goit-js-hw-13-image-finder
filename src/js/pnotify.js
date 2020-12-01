@@ -1,14 +1,15 @@
-import { alert } from '@pnotify/core';
+import { alert, defaults } from '@pnotify/core';
+
+defaults.styling = 'material';
+defaults.icons = 'material';
 
 export function notification(
   type = 'error',
   text = 'Oops, something went wrong ',
-  title = '',
-  delay = 2000,
+  delay = 4000,
 ) {
   const options = {
     type,
-    title,
     text,
     delay,
   };
